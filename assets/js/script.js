@@ -9,7 +9,11 @@ function saveTasks() {
 }
 
 // Todo: create a function to generate a unique task id
-function generateTaskId() {}
+function generateTaskId() {
+  const id = nextId++;
+  localStorage.setItem("nextId", JSON.stringify(nextId)); // Save nextId after increment
+  return id;
+}
 
 // Todo: create a function to create a task card
 function createTaskCard(task) {}
