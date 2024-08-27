@@ -1,6 +1,6 @@
 // Retrieve tasks and nextId from localStorage
-let taskList = JSON.parse(localStorage.getItem("tasks"));
-let nextId = JSON.parse(localStorage.getItem("nextId"));
+let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
+let nextId = JSON.parse(localStorage.getItem("nextId")) || 1;
 
 // Save tasks to localStorage
 function saveTasks() {
@@ -141,4 +141,21 @@ function handleDrop(event, ui) {
 }
 
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
-$(document).ready(function () {});
+$(document).ready(function () {
+  renderTaskList();
+
+  // Add event listener to the task form submission
+  $("#taskForm").submit(handleAddTask);
+
+  // Initialize date picker for the due date field
+  $("#taskDeadline").datepicker({
+    dateFormat: "yy-mm-dd", // Set date format
+    minDate: 0, // Prevent past dates from being selected
+  });
+
+  // Make lanes droppable and set up draggable tasks
+  $(".lane").droppable({
+    accept: ".task-card",
+    drop: handleDrop,
+  });
+});
