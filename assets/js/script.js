@@ -16,7 +16,37 @@ function generateTaskId() {
 }
 
 // Todo: create a function to create a task card
-function createTaskCard(task) {}
+function createTaskCard(task) {
+  const formattedDate = dayjs(task.deadline).format("DD-MM-YYYY");
+  // Calculate the due date difference from today
+  const today = dayjs();
+  const deadline = dayjs(task.deadline);
+  const daysUntilDeadline = deadline.diff(today, "day");
+
+  // Determine the class based on the deadline and status
+  let taskClass = "task-default";
+  if (task.status !== "done") {
+    if (today.isAfter(deadline)) {
+      taskClass = "task-overdue";
+    } else if (daysUntilDeadline <= 3) {
+      taskClass = "task-nearing-deadline";
+    }
+  }
+
+  const taskCard = `
+      <div class="card task-card mb-2 ${taskClass}" data-id="${task.id}">
+        <div class="card-body">
+          <h5 class="card-title">${task.title}</h5>
+          <p class="card-text">${task.description}</p>
+          <p class="card-text"><small class="text-muted">Due: ${formattedDate}</small></p>
+          <button class="btn btn-danger btn-sm delete-task">Delete</button>
+        </div>
+      </div>
+    `;
+
+  // Append the card to the appropriate lane
+  $(`#${task.status}-cards`).append(taskCard);
+}
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {}
