@@ -21,8 +21,6 @@ This project is a task board designed to help project team members organize and 
 
 ## Installation
 
-## Installation
-
 There is no installation needed. To access the website [here](https://lolrb.github.io/Task-Board/)
 
 ## Usage
